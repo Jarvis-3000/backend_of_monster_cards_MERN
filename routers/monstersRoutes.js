@@ -3,6 +3,7 @@ import {getMonsters, editMonster, addMonster} from "../controllers/monstersContr
 
 const router=express.Router()
 
+
 router.post("/addmonster",addMonster)
 router.get("/getmonsters",getMonsters)
 router.put("/editmonster",editMonster)

@@ -2,6 +2,7 @@ import express from "express"
 import mongoose from "mongoose"
 import bcrypt from "bcrypt"
 import validator from "validator"
+import jwt from "jsonwebtoken"
 
 const userSchema=mongoose.Schema({
     firstname:{
@@ -22,11 +23,30 @@ const userSchema=mongoose.Schema({
         type:String,
         required:true,
         validate:[{validator:validator.isStrongPassword,message:"Weak password"}]
-    }
+    },
+    tokens:[
+        {
+            token:{
+                type:String,
+                required:true
+            }
+        }
+    ]
 },
 {
     timestamps:true
 })
+
+userSchema.methods.generateAuthToken=async function(){
+    const user=this
+
+    const token=await jwt.sign({_id:user._id.toString()},process.env.SECRET_KEY)
+    console.log("token created")
+    user.tokens=user.tokens.concat({token})
+    await user.save()
+    
+    return token
+}
 
 
 userSchema.pre('save',async function(){

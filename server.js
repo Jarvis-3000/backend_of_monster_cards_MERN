@@ -2,6 +2,7 @@ import express from "express"
 import monstersRouter from "./routers/monstersRoutes.js"
 import userRouters from "./routers/userRouters.js"
 import ConnectDB from "./config/database.js"
+
 const app=express()
 
 app.use(express.json())

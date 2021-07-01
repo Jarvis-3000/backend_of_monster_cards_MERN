@@ -7,10 +7,7 @@ const router=express.Router()
 
 router.post("/register",userRegister)
 router.post("/login",userLogin)
-router.put("/update",auth,(req,res)=>{
-    console.log("authorized")
-    res.send("authorized")
-})
-router.delete("/delete",userLogout)
+router.put("/update",auth,userUpdate)
+router.delete("/logout",auth,userLogout)
 
 export default router
